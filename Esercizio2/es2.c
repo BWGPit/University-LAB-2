@@ -10,6 +10,14 @@ void exception(char *msg){
     exit(1);
 }
 
+void stampaArray(int **arr, int length){
+    printf("[");
+    for(int i=0;i<length;i++){
+        printf("%d, ", (*arr)[i]);
+    }
+    printf("]\n");
+}
+
 int somma(int arr[], int size){
     int s = 0;
     for(int i=0;i<size;i++){
@@ -27,11 +35,8 @@ void push(int **arr, int element, int *size, int *cap){
         }
     }
     int pos = *size;
-    printf("%d\n", pos);
-    *arr[pos] = element;    // QUESTO NON VA
-    // printf("%d %d\n", *arr[0], *arr[1]);
+    (*arr)[pos] = element;    // Per accedere all'array, si usa (*arr)[pos] e non *arr[pos]
     *size = *size + 1;
-    // printf("%d\n\n", *size);
 }
 
 int main(int argc, char *argv[]){
@@ -54,17 +59,16 @@ int main(int argc, char *argv[]){
     }
 
     for(int i=1;i<=n;i++){
-        if(i%3==0){
+        if(i%3==0&&i%5!=0){
             push(&a, i, &sizeA, &capA);
-        } else if(i%5==0){
+        }
+        if(i%5==0&&i%3!=0){
             push(&b, i, &sizeB, &capB);
         }
     }
 
-    printf("%d %d %d %d %d", a[0], a[1], a[2], a[3], a[4]); // TODO: CAPIRE COME MAI NON VA
-
-    printf("Capacità di A: %d | Lunghezza di A: %d | Somma di A: %d\n", capA, sizeA, somma(a, sizeA));
-    printf("Capacità di B: %d | Lunghezza di B: %d | Somma di B: %d\n", capB, sizeB, somma(b, sizeB));
+    printf("lunghezza a[] = %d, somma a[] = %d\n", sizeA, somma(a, sizeA));
+    printf("lunghezza b[] = %d, somma b[] = %d\n", sizeB, somma(b, sizeB));
 
     free(a);
     free(b);
